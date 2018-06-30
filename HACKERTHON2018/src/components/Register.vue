@@ -51,6 +51,11 @@ export default {
             .then((result)=>{
                 if(result.data.status == 'success'){
                     console.log('success')
+                    this.$notice({
+                        type: 'success',
+                        text: '무사히 회원가입 성공!'
+                    })
+
                 }
                 else {
                     console.log('error')
@@ -58,10 +63,20 @@ export default {
                 })
             .catch((error)=>{
                     console.log('server error')
+                    this.$notice({
+                        type: 'alert',
+                        text: '서버에 오류가 있습니다.'
+                    })
+
             })
           }
           else {
               console.log('비밀번호가 다른디요?')
+                this.$notice({
+                        type: 'alert',
+                        text: '비밀번호가 일치하지 않습니다.'
+                    })
+
           }
       }
   }

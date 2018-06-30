@@ -54,14 +54,27 @@ export default {
               if(result.data.status == 'success'){
                   console.log('success')
                   this.logIn(result.data.token)
+                    this.$notice({
+                        type: 'success',
+                        text: '무사히 로그인 성공!'
+                    })
+
               }
               else {
-                  console.log('error')
-
+                console.log('error')
+                    this.$notice({
+                        type: 'alert',
+                        text: '로그인 정보가 올바르지 않습니다'
+                    })
               }
             })
           .catch((error)=>{
             console.log('server success')
+            this.$notice({
+                type: 'alert',
+                text: '서버에 오류가 있습니다.'
+            })
+
           })
       }
   }

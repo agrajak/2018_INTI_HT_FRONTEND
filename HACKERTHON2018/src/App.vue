@@ -5,14 +5,15 @@
     <p>
       <h1 class="display-4">
         <router-link to="/index">HOME</router-link>
+        <router-link to="/about">ABOUT</router-link>
         <router-link to="/movie">MOVIE</router-link>
         <span v-show="!isLogged">
           <router-link to="/login">LOGIN</router-link>
           <router-link to="/register">REGISTER</router-link>
         </span>
         <span v-show="isLogged">
-          <small>hello. {{getId}}</small>
-          <a @click="logOut">LOGOUT</a>
+          <a href="" @click="logOut">LOGOUT</a>
+          {{getId}}
         </span>
       </h1>
       <hr>
@@ -21,7 +22,7 @@
     </router-view>
 
     <hr>
-    <small>2018년 6월 30일 09시 00분 ~ ???</small>
+    <small>2018년 6월 30일</small>
   </div>
 </template>
 
@@ -53,4 +54,5 @@ export default {
 #app {
   padding:20px;
 }
+
 </style>
