@@ -7,6 +7,17 @@ cd 2018_INTI_HT_FRONTEND
 sudo npm install
 
 ```
+```
+cd config
+vi config.json
+```
+다음 JSON파일 작성
+```
+{
+	targetURL: 'localhost'
+}
+```
+
 
 ### 실행법
 ```
