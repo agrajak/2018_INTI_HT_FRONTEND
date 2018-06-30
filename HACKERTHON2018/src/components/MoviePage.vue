@@ -101,19 +101,16 @@ export default {
                         text: '무사히 삭제 성공!'
                     })
                 }
-                this.pageMode()
+                this.getMovies()
             })
             .catch((err)=>{
                 this.$notice({
                     type: 'alert',
                     text: '삭제 실패했어요.'
                 })
-                this.pageMode()
+                this.getMovies()
             })
         
-    },
-    pageMode: function(){
-        this.getMovies()
     }
   },
   mounted: function (){
