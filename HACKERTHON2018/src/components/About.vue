@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    made by 
+    made by
     <br>
     박건후
     <br>
@@ -19,7 +19,6 @@
     (학번순)
   </div>
 </template>
-
 <script>
 export default {
 /* eslint-disable */

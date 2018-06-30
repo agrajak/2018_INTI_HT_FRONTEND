@@ -41,7 +41,7 @@ export default {
   },
   methods: {
       submit: function(){
-          if(this.password == this.password2){
+          if(this.password == this.password2 && this.password != ''){
               var json = {
                   id: this.id,
                   name: this.name,

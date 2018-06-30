@@ -21,8 +21,12 @@
             <small class="form-text text-muted">You have to enter the duration time of movie.</small>
         </div>
         <div class="form-group">
-            <label for="files">Example file input</label>
+            <label for="files">Upload Video File</label>
             <input type="file" id="files" ref="file" class="form-control-file" @change="fileChanges">
+        </div>
+        <div class="form-group">
+            <label for="files2">Upload Smi File</label>
+            <input type="file" id="files2" ref="file" class="form-control-file" @change="fileChanges2">
         </div>
         <br>
         <button v-show="mode == 'edit'" type="button" class="btn btn-primary" @click="uploadMovie">Edit</button>
@@ -44,7 +48,8 @@ export default {
       userfile: '',
       showtime: '',
       id: '',
-      tempfile: ''
+      tempfile: '',
+      tempfile2: ''
     }
   },
   mounted: function (){
@@ -68,10 +73,16 @@ export default {
   },
   methods: {
     fileChanges: function(e){
-        console.log(e)
+        console.log("video")
         var file = e.target.files[0]
         console.log(file)
         this.tempfile = file
+    },
+    fileChanges2: function(e){
+        console.log("smi")
+        var file = e.target.files[0]
+        console.log(file)
+        this.tempfile2 = file
     },
     uploadMovie: function(){
         var json = {
@@ -86,6 +97,7 @@ export default {
         formData.append('information', JSON.stringify(json))
 
         formData.append('userfile',this.tempfile)
+        formData.append('captionfile',this.tempfile2)
 
         if(this.mode == 'upload'){
             this.$http.post(this.$config.targetURL+'/movie/create', formData)
