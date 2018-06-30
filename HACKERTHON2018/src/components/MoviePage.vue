@@ -10,7 +10,7 @@
                 <br>
                 아마도 API 서버가 꺼져있을겁니다.
             </div>
-            <div class="card-columns">
+            <div class="card-columns" v-show="movies.length">
                 <ul>
                     <ul v-for="(movie, index) in movies" :key="index" class="card p-3" style="">
                         <img class="card-img-top" src="../assets/logo.png" alt="Card image cap">
@@ -32,8 +32,9 @@
                             </div>
                             <div class="text-right" v-if="isLogged">
                                 <button type="button" class="btn" style="background:rgb(53,57,92); color:floralwhite" @click="deleteMode(movie)">삭제</button>
-                                <button type="button" class="btn" style="background:rgb(53,57,92); color:floralwhite" @click="editMode(movie)">수정</button>
+                                <button type="button" class="btn" style="background:rgb(53,57,92); color:floralwhite" @click="editMode(movie)" disabled>수정</button>
                             </div>
+                            <button type="button" class="btn" style="background:rgb(53,57,92); color:floralwhite" @click="watchMovie(movie)">보기</button>
                             <div class="timestamp" style="color:gray">
                                 <small>
                                     {{movie.upload_time}}
@@ -71,6 +72,9 @@ export default {
     }
   },
   methods: {
+    watchMovie: function(movie){
+
+    },
     fileChanges: function(e){
         console.log(e)
         var file = e.target.files[0]
@@ -121,9 +125,14 @@ export default {
         
     },
     uploadMode: function(){
-        this.$router.push({ path: 'upload_movie', query: {
+/*        this.$router.push({ path: 'upload_movie', query: {
             mode: 'upload'
-        }})
+        }})*/
+        this.$router.push({
+            path: 'search_movie', query: {
+
+            }
+        })
     },
     editMode: function(movie){
         this.$router.push({ path: 'upload_movie', query: {

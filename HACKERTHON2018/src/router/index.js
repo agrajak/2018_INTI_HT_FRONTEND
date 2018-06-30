@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import MainPage from '@/components/MainPage'
 import MoviePage from '@/components/MoviePage'
 import MovieUpload from '@/components/MovieUpload'
+import MovieSearch from '@/components/MovieSearch'
 import Login from '@/components/Login'
 import About from '@/components/About'
 import Register from '@/components/Register'
@@ -39,6 +40,11 @@ export default new Router({
       path: '/upload_movie/',
       name: 'MovieUpload',
       component: MovieUpload
+    },
+    {
+      path: '/search_movie/',
+      name: 'MovieSearch',
+      component: MovieSearch
     }
   ]
 })

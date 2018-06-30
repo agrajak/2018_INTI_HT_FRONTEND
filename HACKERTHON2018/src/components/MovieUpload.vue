@@ -3,7 +3,7 @@
     <form>
         <div class="form-group">
             <label for="Title">Movie Title</label>
-            <input type="text" class="form-control" placeholder="Enter movie title" v-model="title">
+            <input type="text" class="form-control" placeholder="Enter movie title" v-model="title" disabled>
             <small class="form-text text-muted">You have to enter the name of movie.</small>
         </div>
         <div class="form-group">
@@ -62,9 +62,16 @@ export default {
         this.id = movie.id;
         this.showtime = movie.showtime;
         this.content = movie.content;
+        this.titleEn = movie.titleEn;
+        this.director = movie.director;
     }
     else if(this.$route.query.mode == 'upload'){
         this.mode = 'upload'
+        var movie = this.$route.query || {}
+        this.title = movie.title || '';
+        this.titleEn = movie.titleEn;
+        this.director = movie.director;
+        
     }
     else{
         console.log('올바르지 않은 접근이긴한데 그냥 할꺼임')
@@ -85,11 +92,25 @@ export default {
         this.tempfile2 = file
     },
     uploadMovie: function(){
-        var json = {
-            title: this.title,
-            showtime: this.showtime,
-            content: this.content,
-            id: this.id
+        var json;
+        if(this.mode == 'edit'){
+            json = {
+                title: this.title,
+                title_en: this.titleEn,
+                director: this.director,
+                showtime: this.showtime,
+                content: this.content,
+                id: this.id
+            }
+        }
+        else if(this.mode == 'upload'){
+            json = {
+                title: this.title,
+                title_en: this.titleEn,
+                director: this.director,
+                content: this.content,
+                showtime: this.showtime
+            }
         }
 
         console.log(JSON.stringify(json))
