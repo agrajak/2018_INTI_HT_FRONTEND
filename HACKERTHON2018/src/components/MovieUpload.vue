@@ -25,7 +25,8 @@
             <input type="file" id="files" ref="file" class="form-control-file" @change="fileChanges">
         </div>
         <br>
-        <button type="button" class="btn btn-primary" @click="uploadMovie">Register</button>
+        <button v-show="mode == 'edit'" type="button" class="btn btn-primary" @click="uploadMovie">Edit</button>
+        <button v-show="mode != 'edit'" type="button" class="btn btn-primary" @click="uploadMovie">Register</button>
     </form>
   </div>
 </template>
@@ -87,7 +88,7 @@ export default {
         formData.append('userfile',this.tempfile)
 
         if(this.mode == 'upload'){
-            this.$http.post('http://220.230.125.170:4100/movie/create', formData)
+            this.$http.post(this.$config.targetURL+'/movie/create', formData)
             .then((result)=>{
                 console.log(result)
                 if(result.data.status=="success"){
@@ -108,7 +109,7 @@ export default {
             })
         }
         else if(this.mode == 'edit'){
-            this.$http.put('http://220.230.125.170:4100/movie/update', formData)
+            this.$http.put(this.$config.targetURL+'/movie/update', formData)
             .then((result)=>{
                 console.log(result)
                 if(result.data.status=="success"){

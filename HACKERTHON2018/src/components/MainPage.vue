@@ -6,11 +6,15 @@
 
 <script>
 export default {
+/* eslint-disable */
   name: 'HelloWorld',
   data () {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
+  },
+  mounted: function () {
+    console.log(this.$config.targetURL || 'null')
   }
 }
 </script>

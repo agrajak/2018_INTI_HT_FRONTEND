@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import MainPage from '@/components/MainPage'
 import MoviePage from '@/components/MoviePage'
 import MovieUpload from '@/components/MovieUpload'
+import Login from '@/components/Login'
+import Register from '@/components/Register'
 Vue.use(Router)
 
 export default new Router({
@@ -11,6 +13,16 @@ export default new Router({
       path: '/index',
       name: 'MainPage',
       component: MainPage
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     },
     {
       path: '/movie',

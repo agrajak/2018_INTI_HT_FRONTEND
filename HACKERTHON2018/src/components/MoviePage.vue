@@ -91,7 +91,7 @@ export default {
         }})
     },
     deleteMode: function(movie){
-        this.$http.delete('http://220.230.125.170:4100/movie/delete/'+movie.id)
+        this.$http.delete(this.$config.targetURL+'/movie/delete/'+movie.id)
             .then((result)=>{
                 console.log(result)
                 if(result.data.status=="success"){
@@ -118,6 +118,9 @@ export default {
   },
   mounted: function (){
       this.getMovies()
+      
+    console.log(this.$config || '')
+    console.log(this.$config.targetURL || '')
   }
 }
 </script>

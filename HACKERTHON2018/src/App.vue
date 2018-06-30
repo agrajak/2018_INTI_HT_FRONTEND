@@ -1,11 +1,19 @@
 <template>
 
   <div id="app">
-    <h1 class="display-1">INT-I HACKERTHON 2018</h1>
+    <h1 class="display-3">INT-I HACKERTHON 2018</h1>
     <p>
       <h1 class="display-4">
         <router-link to="/index">HOME</router-link>
         <router-link to="/movie">MOVIE</router-link>
+        <span v-show="!isLogged">
+          <router-link to="/login">LOGIN</router-link>
+          <router-link to="/register">REGISTER</router-link>
+        </span>
+        <span v-show="isLogged">
+          <small>hello. {{getId}}</small>
+          <a @click="logOut">LOGOUT</a>
+        </span>
       </h1>
       <hr>
 
@@ -18,8 +26,25 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
-  name: 'App'
+  name: 'App',
+  computed: {
+    isLogged() {
+      return this.$store.getters.isLogged
+    },
+    getId(){
+      return this.$store.getters.getId
+    },
+    getToken(){
+      return this.$store.getters.getToken
+    }
+  },
+  methods:{
+    logOut: function(){
+      this.$store.commit('logOut')
+    }
+  }
 }
 </script>
 
