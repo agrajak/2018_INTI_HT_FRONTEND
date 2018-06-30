@@ -1,11 +1,10 @@
 <template>
 
   <div id="app">
-    <h1 class="display-1">INT I HACKERTHON 2018</h1>
+    <h1 class="display-1">INT-I HACKERTHON 2018</h1>
     <p>
-      <hr>
       <h1 class="display-4">
-        <router-link to="/index">INDEX</router-link>
+        <router-link to="/index">HOME</router-link>
         <router-link to="/movie">MOVIE</router-link>
       </h1>
       <hr>
@@ -24,8 +23,9 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
+@import './assets/noty.css';
 #app {
-  margin-left : 40px;
+  padding:20px;
 }
 </style>
