@@ -1,45 +1,10 @@
 <template>
     <div id="MoviePage" >
         <div id="aa">
-            <div v-show="mode == 'page'">
-                <button type="button" class="btn btn-primary" @click="getMovies">새로고침</button>
-                <button type="button" class="btn btn-secondary" to="/upload_movie" style="color:floralwhite" @click="uploadMode">업로드</button>
-            </div>
-            <div v-show="mode != 'page'">
-                <button type="button" class="btn btn-primary" @click="pageMode">뒤로가기</button>
-            </div>
+            <button type="button" class="btn btn-primary" @click="getMovies">새로고침</button>
+            <button type="button" class="btn btn-secondary" to="/upload_movie" style="color:floralwhite" @click="uploadMode">업로드</button>
         </div>
-        <div id="MovieUpload" v-show="mode != 'page'">
-            <form>
-                <div class="form-group">
-                    <label for="Title">Movie Title</label>
-                    <input type="text" class="form-control" placeholder="Enter movie title" v-model="title">
-                    <small class="form-text text-muted">You have to enter the name of movie.</small>
-                </div>
-                <div class="form-group">
-                    <label for="comment">Summary</label>
-                    <textarea class="form-control" rows="5" id="comment" v-model="content"></textarea>
-                    <small class="form-text text-muted">You have to enter the summary of movie.</small>
-                </div>
-                <div class="form-group">
-                    <label for="showtimeinput">Show Time</label>
-                    <div class="input-group">
-                        <input id="showtimeinput" type="number" class="form-control" placeholder=150 v-model="showtime">
-                        <span class="input-group-text">min</span>
-                    </div>
-                    <small class="form-text text-muted">You have to enter the duration time of movie.</small>
-                </div>
-                <div class="form-group">
-                    <label for="files">Example file input</label>
-                    <input type="file" id="files" ref="file" class="form-control-file" @change="fileChanges">
-                </div>
-                <br>
-                <button v-show="mode =='upload'" type="button" class="btn btn-primary" @click="uploadMovie">Register</button>
-                <button v-show="mode =='edit'" type="button" class="btn btn-primary" @click="uploadMovie">Edit</button>
-            </form>
-        </div>
-        <div id="MovieTab" v-show="mode == 'page'">
-            <div id="pageBox">
+        <div id="pageBox">
             <div v-if="movies.length == 0">
                 불러올 정보가 없습니다.
                 <br>
@@ -64,7 +29,6 @@
                     </div>
                 </div>
             </div>
-            </div>
         </div>
     </div>
 </template>
@@ -82,7 +46,6 @@ export default {
         userfile: '',
         showtime: '',
         tempfile: '',
-        mode: 'page'
     }
   },
   methods: {
@@ -92,63 +55,6 @@ export default {
         console.log(file)
         this.tempfile = file
     },
-    uploadMovie: function(){
-        
-        var json = {
-            title: this.title,
-            showtime: this.showtime,
-            content: this.content,
-            id: this.id
-        }
-
-        console.log(JSON.stringify(json))
-        var formData = new FormData()
-
-        formData.append('information', JSON.stringify(json))
-        formData.append('userfile',this.tempfile)
-
-        if(this.mode == 'upload'){
-            this.$http.post('http://220.230.125.170:4100/movie/create', formData)
-            .then((result)=>{
-                console.log(result)
-                if(result.data.status=="success"){
-                    console.log("성공!")
-                    this.$notice({
-                        type: 'success',
-                        text: '무사히 업로드 성공!'
-                    })
-                }
-                this.mode = 'page'
-                this.getMovies()
-            })
-            .catch((err)=>{
-                this.$notice({
-                    type: 'alert',
-                    text: '업로드 실패했어요.'
-                })
-            })
-        }
-        else if(this.mode == 'edit'){
-            this.$http.put('http://220.230.125.170:4100/movie/update', formData)
-            .then((result)=>{
-                console.log(result)
-                if(result.data.status=="success"){
-                    console.log("성공!")
-                    this.$notice({
-                        type: 'success',
-                        text: '무사히 편집 성공!'
-                    })
-                }
-                this.pageMode()
-            })
-            .catch((err)=>{
-                this.$notice({
-                    type: 'alert',
-                    text: '수정 실패했어요.'
-                })
-            })
-        }
-      },
     getMovies: function(event) {
         this.$http.get("http://220.230.125.170:4100/movie")
         .then((result)=>{
@@ -174,21 +80,18 @@ export default {
         
     },
     uploadMode: function(){
-        this.mode = 'upload'
-        this.title = ''
-        this.content = ''
-        this.showtime = ''
+        this.$router.push({ path: 'upload_movie', query: {
+            mode: 'upload'
+        }})
     },
     editMode: function(movie){
-        this.mode = 'edit'
-        this.title = movie.title
-        this.id = movie.id
-        this.content = movie.content
-        this.showtime = movie.showtime
+        this.$router.push({ path: 'upload_movie', query: {
+            mode: 'edit',
+            movie: movie
+        }})
     },
     deleteMode: function(movie){
-        this.mode = 'delete'
-        this.$http.delete('http://220.230.125.170:4100/movie/delete?id='+movie.id, formData)
+        this.$http.delete('http://220.230.125.170:4100/movie/delete/'+movie.id)
             .then((result)=>{
                 console.log(result)
                 if(result.data.status=="success"){
@@ -205,10 +108,11 @@ export default {
                     type: 'alert',
                     text: '삭제 실패했어요.'
                 })
+                this.pageMode()
             })
+        
     },
     pageMode: function(){
-        this.mode = 'page'
         this.getMovies()
     }
   },
